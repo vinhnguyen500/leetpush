@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "LeetPush",
+    "description": "The name of the extension."
+  },
+  "appDescription": {
+    "message": "A code repository pusher",
+    "description": "The description of the extension."
+  },
+  "btnTooltip": {
+    "message": "LeetPush",
+    "description": "Tooltip for the button."
+  }
+}

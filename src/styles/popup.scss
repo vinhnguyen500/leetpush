@@ -1,0 +1,183 @@
+@import "modules/reset";
+@import "modules/variables";
+@import "modules/layout";
+
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  padding: 20px 20px;
+  background: $white;
+}
+
+footer {
+  color: $text-secondary;
+  text-align: right;
+  font-size: 0.8em;
+  a {
+    outline: none;
+    color: lighten($text-secondary, 10%);
+    &:hover {
+      color: $text-secondary;
+    }
+  }
+}
+
+.popup-content {
+  max-width: 600px;
+  max-height: 600px;
+  background: black;
+}
+
+.app-name {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: $text-secondary;
+  text-align: center;
+  margin: 0 auto 1em auto;
+  padding: 0;
+}
+
+.site-description {
+  padding: 0.5em;
+  border: 1px solid $gray;
+  margin: 0;
+
+  h3 {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid $gray;
+    padding-bottom: 0.5em;
+  }
+
+  .description {
+    color: $text-secondary;
+    max-height: 100px;
+    font-size: 0.8em;
+    line-height: 1.2;
+  }
+
+  .url {
+    outline: none;
+    text-decoration: none;
+    line-height: 1.2;
+    font-size: 0.8em;
+    word-break: break-word;
+    display: block;
+  }
+}
+
+.action-container {
+  margin: 1em auto;
+}
+
+.btn {
+  background: none;
+  border: none;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.5em 1.5em;
+  background: $brand-primary;
+  color: $white;
+  font-weight: $headings-font-weight;
+  border-radius: 2px;
+  outline: none;
+  font-size: 1em;
+}
+
+.code-presentation {
+  max-height: 300px;
+  min-width: 500px;
+  background-color: Beige;
+  overflow-x: auto;
+  overflow-y: auto;
+  border-width: 2px 0px 2px 0px; 
+  border-color: black;
+  border-style: solid;
+}
+
+.form-style-1 {
+	max-width: 400px;
+	font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+.form-style-1 li {
+	padding: 0;
+	display: block;
+	list-style: none;
+	margin: 10px 0 0 0;
+}
+.form-style-1 label{
+	margin:0 0 3px 0;
+	padding:0px;
+	display:block;
+	font-weight: bold;
+}
+.form-style-1 input[type=text], 
+textarea, 
+select{
+  font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border:1px solid #BEBEBE;
+	padding: 7px;
+	margin:0px;
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;	
+}
+.form-style-1 input[type=text]:focus,
+.form-style-1 textarea:focus, 
+.form-style-1 select:focus{
+	-moz-box-shadow: 0 0 8px #88D5E9;
+	-webkit-box-shadow: 0 0 8px #88D5E9;
+	box-shadow: 0 0 8px #88D5E9;
+	border: 1px solid #88D5E9;
+}
+.form-style-1 .field-divided{
+  width: 50%;
+  height: 30px;
+}
+
+.form-style-1 .field-textarea{
+  height: 60px;
+  width: 350px;
+}
+.form-style-1 input[type=submit], .form-style-1 input[type=button]{
+  background: #4B99AD;
+	padding: 8px 15px 8px 15px;
+	border: none;
+	color: #fff;
+}
+.form-style-1 input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+  background: #4691A4;
+	box-shadow:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
+
+#repo-container {
+  padding: 20px 0px 0px 0px;
+  width: 500px;
+  height: 80px;
+}
+
+#filename {
+  width: 10px;
+  float: left;
+}
+
+#branch {
+  margin: 0px 0px 0px 200px;
+  width: 200px;
+  height: 30px;
+  float: left;
+}
+
+#clear {
+  clear: both;
+}
