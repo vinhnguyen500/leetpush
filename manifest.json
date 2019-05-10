@@ -7,6 +7,9 @@
     "16": "icons/logo16.png",
     "128": "icons/logo128.png"
   },
+  "web_accessible_resources": [
+    "images/GitHub-Mark.png"
+  ],
   "default_locale": "en",
   "background": {
     "scripts": [
