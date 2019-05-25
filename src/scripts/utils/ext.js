@@ -9,6 +9,7 @@ const apis = [
   'events',
   'extension',
   'extensionTypes',
+  'identity',
   'history',
   'i18n',
   'idle',

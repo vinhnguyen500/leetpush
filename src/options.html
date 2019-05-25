@@ -17,14 +17,11 @@
   </div>
   <div class="grid">
     <div class="unit whole center-on-mobiles">
-      <form id="git-login">
-          <div class="form-style-1">
-            <img id='github-mark' src="" alt="GitHub-Mark" width="100" height="100"/>
-            <input type="text" style="margin: 0 0 1em 0" name="username" class="field-long" placeholder="Username"/>
-            <input type="password" name="password" class="field-long" placeholder="Password"/>
-            <input type="submit" value="Login"/>
-          </div>
-      </form>
+      <div id="authentication" style="display: none">
+        <img style="margin-left:5px;"id='github-mark' src="" alt="GitHub-Mark" width="125" height="125"/>
+        <button id="git-oauth">Sign in With Github</button>
+      </div>
+      <div id="git-info" style="display: none"><p>Selected Location:</p></div>
       <div class="option">
         <em class="text-muted">...display extension options here...</em>
       </div>

@@ -19,6 +19,7 @@
   "permissions": [
     "tabs",
     "storage",
+    "identity",
     "http://*/*",
     "https://*/*"
   ],
@@ -60,6 +61,11 @@
       "run_at": "document_end"
     }
   ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "LeetPushApp@gmail.com"
+    }
+  },
   "browser_action": {
     "default_icon": {
       "19": "icons/logo19.png",
