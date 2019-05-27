@@ -2,7 +2,7 @@ import ext from "./utils/ext";
 import storage from "./utils/storage";
 import { getAccessToken } from "./utils/authorize";
 
-var GitHub = require('github-api');
+
 var git_img = ext.extension.getURL('images/GitHub-Mark.png')
 document.getElementById('github-mark').src = git_img;
 var oauth_button = document.getElementById('git-oauth');
@@ -33,12 +33,20 @@ function getErr(err) {
 }
 
 function getGitData(access_token) {
+  var GitHub = require('github-api');
   var gh = new GitHub({
     token: access_token
   });
   var user = gh.getUser();
   var gitDisplay = document.getElementById('git-info');
   gitDisplay.style.display="block";
+  storage.get('location', function(resp) {
+    if (resp.location != 'undefined') {
+      setLocation(resp.location);
+    } else {
+      setLocation('Select a location in options');
+    }
+  });
   user.listRepos(function(err, repos) {
     if (err) {
       getErr(err);
@@ -47,18 +55,17 @@ function getGitData(access_token) {
       repoList.className = "tree";
       for (var i = 0; i < repos.length; i++) {
         var repoItem = document.createElement("li");
-        var f = "folder" + i;
-        var html = `<label for="${f}">${repos[i].name}</label><input id="${f}" type="checkbox">`
-        repoItem.innerHTML = html;
+        var f = "repo" + i;
+        repoItem.innerHTML = `<label for="${f}">${repos[i].name}</label><input id="${f}" type="checkbox" />`
         var repoObj = gh.getRepo(repos[i].owner.login, repos[i].name);
         repoItem.onclick = (function() {
           var currObj = repoObj
           var currItem = repoItem
+          var repoName = repos[i].name
           return function() {
-            getBranch(currObj, currItem)
+            getBranch(currObj, currItem, repoName)
           }
         })();
-        console.log(repos[i].name);
         repoList.appendChild(repoItem);
       }
       gitDisplay.appendChild(repoList);
@@ -66,7 +73,7 @@ function getGitData(access_token) {
   });
 }
 
-function getBranch(repoObj, repoItem) {
+function getBranch(repoObj, repoItem, repoName) {
   repoItem.onclick = ""
   repoObj.listBranches(function(err, branches) {
     if (err) {
@@ -75,15 +82,15 @@ function getBranch(repoObj, repoItem) {
       var brList = document.createElement("ol");
       for (var j = 0; j < branches.length; j++) {
         var brItem = document.createElement("li");
-        var b = "subfolder" + j;
-        var brHtml = `<label for="${b}">${branches[j].name}</label><input id=${b} type="checkbox">`;
-        brItem.innerHTML = brHtml;
+        var b = `${repoName}-subfolder-${j}`
+        brItem.innerHTML = `<label for="${b}">${branches[j].name}</label><input id=${b} type="checkbox" />`;
         brItem.onclick = (function() {
           var currObj = repoObj;
           var currItem = brItem;
           var bname = branches[j].name
+          var repoN = repoName
           return function() {
-            getContents(currObj, currItem, bname)
+            getContents(currObj, currItem, repoN, bname, "");
           }
         })();
         brList.appendChild(brItem);
@@ -93,19 +100,45 @@ function getBranch(repoObj, repoItem) {
   });
 }
 
-function getContents(repoObj, brItem, bname) {
-  brItem.onclick = "";
-  repoObj.getContents(bname, '', true, function(err, data) {
+function getContents(repoObj, parentItem, repoName, name, path) {
+  var location = `${repoName}/${name}/${path}`
+  parentItem.onclick = setLocation(location);
+  repoObj.getContents(name, path, true, function(err, data) {
     if (err) {
       getErr(err);
     } else {
+      var contentList = document.createElement("ol");
       for (let item of data) {
         if (item.type == "file") {
-          alert("file!")
+          var fileItem = document.createElement("li");
+          fileItem.className = 'file'
+          fileItem.innerHTML = `<a>${item.name}</a>`
+          contentList.appendChild(fileItem);
+        } else if (item.type == "dir") {
+          var dirItem = document.createElement("li")
+          var b = `${repoName}-${name}-${item.name}`
+          dirItem.innerHTML = `<label for="${b}">${item.name}</label><input id=${b} type="checkbox" />`;
+          dirItem.onclick = (function() {
+            var currObj = repoObj;
+            var currItem = dirItem;
+            var tname = name;
+            var repoN = repoName;
+            return function() {
+              getContents(currObj, currItem, repoN, tname, item.path);
+            }
+          })();
+          contentList.appendChild(dirItem);
         } else {
-          alert("dir!")
+          console.log(`Unknown file type: ${item.type}`)
         }
       }
+      parentItem.appendChild(contentList);
     }
   });
+}
+
+function setLocation(location) {
+  var locSelector = document.getElementById("location");
+  locSelector.innerHTML = location;
+  storage.set({'location' : location})
 }

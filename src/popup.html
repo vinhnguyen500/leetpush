@@ -9,19 +9,23 @@
       <h1 class="app-name">LeetPush</h1>
       <div id="message-container"></div>
       <div id="display-container"></div>
-      <form id="commit-config" style="display: none;" action="/my-handling-form-page" method="post">
+      <form id="commit-config" style="display: none;">
         <div class="form-style-1">
             <div id="repo-container">
               <div id="filename">
-                <label>Filename:</label><input style="width:175px" type="text" name="field1" class="field-divided" placeholder="my_file.py"/>
+                <label>Filename:</label>
+                <input style="width:175px" type="text" id="fname" name="fname" class="field-divided" placeholder="my_file.py"/>
               </div>
+              <label style="margin-left:210px">Location:</label>
               <div id="branch">
-                <label>Location:</label>
-                <div id="branch-container">/leetcode/master/dynamic-programming/</div>
+                <div style="position:absolute; width:auto; height:100%" id="location"></div>
               </div>
             </div>
-            <label>Commit Message:</label><textarea type="text" name="field2" class="field-long field-textarea" placeholder="initial commit"></textarea>
-            <label style="width:80px;margin: 20px 0px 0px 0px;"><input type="submit" value="Submit" /></label>
+            <label>Commit Message:</label>
+            <textarea type="text" id="commit" name="commit" class="field-long field-textarea" placeholder="initial commit"></textarea>
+            <label style="width:80px;margin: 20px 0px 0px 0px;">
+              <input type="button" id="push-button" value="Submit" />
+            </label>
         </div>
       </form>
       <footer>

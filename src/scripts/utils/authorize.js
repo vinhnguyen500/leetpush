@@ -53,7 +53,7 @@ function validate(redirectURL) {
 }
 
 function authorize() {
-  const scopes = ["gists", "repo"];
+  const scopes = ["gist", "repo", "read:user"];
   let authURL = "https://github.com/login/oauth/authorize";
   authURL += `?client_id=${CLIENT_ID}`;
   authURL += `&response_type=token`;

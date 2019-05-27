@@ -14,7 +14,7 @@ function create_button(evt) {
       push_btn.className = "push-btn-2156"
       var content_span = document.createElement("span")
       content_span.className = "push-content-2156"
-      var t = document.createTextNode("Push Code");
+      var t = document.createTextNode("Push");
       content_span.appendChild(t)
       push_btn.appendChild(content_span);
       push_btn.onclick = function git_push() {
@@ -22,7 +22,6 @@ function create_button(evt) {
         setTimeout(() => push_btn.style.backgroundColor='rgb(190, 226, 206)', 250) 
         code = ""
         Array.from(document.querySelectorAll(".CodeMirror-line")).forEach(el => code += (el.textContent + '\n'));
-        ext.runtime.sendMessage({ action: "push-code", data: code })
       }
       //Appending to DIV
       btn_div.appendChild(push_btn);
