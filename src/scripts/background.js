@@ -6,7 +6,7 @@ require("babel-core/register");
 require("babel-polyfill");
 var GitHub = require('github-api');
 
-async function push_code(access_token, file, commit, code) {
+async function push_code(file, commit, code) {
   var token = await storage.get('token');
   var access_token = token.token;
   if (access_token ==='undefined') {
@@ -15,6 +15,15 @@ async function push_code(access_token, file, commit, code) {
   var loc = (await storage.get('location'));
   var location = loc.location + "";
   var paths = location.split("/")
+  var repoName = paths[0];
+  var branchName = paths[1];
+  var path = ""
+  for (var i = 2; i < paths.length; i++) {
+    if (paths[i]) {
+      path += paths[i] + "/"
+    }
+  }
+  path += file;
   if (location === 'undefined') {
     return 'Location not set. Configure the path in the options page.';
   }
@@ -24,9 +33,26 @@ async function push_code(access_token, file, commit, code) {
   var user = gh.getUser();
   try {
     var profile = (await user.getProfile());
-    console.log(JSON.stringify(profile))
+    var username = profile.data.login;
+    console.log(username);
+    console.log(repoName);
+    console.log(branchName);
+    console.log(path);
+    var committer = {
+      "committer": {
+        "name": username,
+        "email": "LeetPushApp@gmail.com"
+      }
+    }
+    var repo = gh.getRepo(username, repoName);
+    try {
+      await repo.writeFile(branchName, path, code, commit, committer);
+    }
+    catch (error) {
+      return ('Failed to create file! ' + error);
+    }
   } catch (error) {
-    return 'Invalid Token! Reauthenticate through the options tab';
+    return 'Invalid Token! Reauthenticate through the options tab. ' + error;
   }
   return 'pushed';
 }
